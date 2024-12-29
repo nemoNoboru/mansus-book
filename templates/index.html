@@ -1,0 +1,13 @@
+{% extends "base.html" %} {% block content %}
+<h1 class="title playfair-display-bold">Mansus</h1>
+
+<h2>The house without walls</h2>
+<p>here we tell the stories of those whose footprints still walk the Mansus.</p>
+<hr />
+<p>Chapters</p>
+{% set section = get_section(path="blog/_index.md") %} {% for page in
+section.pages %}
+<a href="{{ page.permalink | safe }}">
+  <p>Chapter {{page.extra.chapter}} - {{ page.title }}</p>
+</a>
+{% endfor %} {% endblock content %}

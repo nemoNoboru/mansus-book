@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    /* Reset all default margins, paddings, and box sizing */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .logo {
+      position: fixed;
+      bottom: 8px;
+      left: 8px;
+      font-weight: 800;
+
+      font-family: "Playfair Display", serif;
+    }
+
+    hr {
+      height: 32px;
+      border: none;
+    }
+
+    /* Ensure html and body take up full height */
+    html,
+    body {
+      height: 100%;
+      font-size: 100%;
+      /* Ensures consistent font size scaling */
+      line-height: 1.5;
+      /* Default line-height for readability */
+    }
+
+    /* Remove default list styling */
+    ul,
+    ol {
+      list-style: none;
+    }
+
+    /* Remove default styles for anchor tags */
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    p {
+      font-size: 3vmin;
+      display: flex;
+      flex: 1;
+      font-family: "Noto Serif", serif;
+      font-optical-sizing: auto;
+      font-weight: 380;
+      font-style: normal;
+      text-align: justify;
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 768px) {
+      p {
+        font-size: 4.5vmin;
+        display: flex;
+        flex: 1;
+        font-family: "Noto Serif", serif;
+        font-optical-sizing: auto;
+        font-weight: 480;
+        font-style: normal;
+        text-align: justify;
+        margin-bottom: 32px;
+      }
+    }
+
+    /* Reset images to be responsive by default */
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Reset table styles */
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    h1 {
+      font-size: 18vmin;
+      font-family: "Playfair Display", serif;
+      font-optical-sizing: auto;
+      font-weight: 800;
+      font-style: normal;
+    }
+
+    .section {
+      display: flex;
+      justify-content: center;
+    }
+
+    h2 {
+      font-size: 8vmin;
+      color: rgba(0, 0, 0, 0.8);
+      font-family: "Playfair Display", serif;
+      font-optical-sizing: auto;
+      font-weight: 800;
+      font-style: normal;
+      margin-bottom: 64px;
+      line-height: 1;
+    }
+
+    .container {
+      max-width: 1200px;
+      padding: 0 8%;
+      display: flex;
+      flex: 1;
+      align-content: center;
+      flex-direction: column;
+      justify-content: "center";
+    }
+
+    .playfair-display-bold {
+      font-family: "Playfair Display", serif;
+      font-optical-sizing: auto;
+      font-weight: 800;
+      font-style: normal;
+    }
+
+    // <uniquifier>: Use a unique and descriptive class name
+    // <weight>: Use a value from 100 to 900
+
+    .noto-serif-normal {
+      font-family: "Noto Serif", serif;
+      font-optical-sizing: auto;
+      font-weight: 200;
+      font-style: normal;
+      font-variation-settings: "wdth" 100;
+    }
+
+    .noto-serif-bold {
+      font-family: "Noto Serif", serif;
+      font-optical-sizing: auto;
+      font-weight: 800;
+      font-style: normal;
+      font-variation-settings: "wdth" 100;
+    }
+  </style>
+
+  <title>Mansus.</title>
+</head>
+
+<body class="outer">
+  <p class="logo">M</p>
+  <section class="section">
+    <div class="container">{% block content %} {% endblock %}</div>
+  </section>
+</body>
+
+</html>
