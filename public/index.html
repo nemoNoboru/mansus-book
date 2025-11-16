@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mansus - Primera Edición</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', 'Garamond', 'Georgia', serif;
+            background-color: #FEFEFE;
+            color: #1a1a1a;
+            line-height: 1.8;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header with logo */
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 60px 40px 40px;
+            border-bottom: 1px solid #e0e0e0;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .logo {
+            width: 450px;
+            height: auto;
+            margin-bottom: 30px;
+        }
+
+        .edition-info {
+            font-family: 'Arial', sans-serif;
+            font-size: 14px;
+            letter-spacing: 1px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 13px;
+            color: #999;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            align-items: center;
+            padding: 30px 40px;
+            font-family: 'Arial', sans-serif;
+            font-size: 13px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        nav a {
+            color: #666;
+            text-decoration: none;
+            margin-right: 30px;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #1a1a1a;
+        }
+
+        /* Main content area */
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        /* Article styling */
+        article {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 100px;
+            opacity: 0;
+            animation: fadeIn 1s ease-in forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .article-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+        }
+
+        /* Language toggle */
+        .language-toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-family: 'Arial', sans-serif;
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+            font-family: 'Arial', sans-serif;
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        .lang-btn:hover {
+            color: #666;
+        }
+
+        .lang-btn.active {
+            color: #1a1a1a;
+            font-weight: bold;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .lang-separator {
+            color: #ddd;
+        }
+
+        /* Language content visibility */
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+
+        .article-title {
+            font-size: 32px;
+            font-weight: 400;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        .article-meta {
+            font-family: 'Arial', sans-serif;
+            font-size: 12px;
+            color: #999;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .article-author {
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Two-column layout for longer pieces */
+        .article-body {
+            column-count: 2;
+            column-gap: 60px;
+            text-align: justify;
+            hyphens: auto;
+        }
+
+        .article-body p {
+            margin-bottom: 1.5em;
+        }
+
+        .article-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Single column for shorter pieces or poetry */
+        .single-column {
+            column-count: 1;
+            max-width: 650px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        /* Poetry specific styling */
+        .poetry {
+            text-align: left;
+            line-height: 2;
+        }
+
+        .poetry p {
+            margin-bottom: 1em;
+        }
+
+        .poetry .stanza {
+            margin-bottom: 2em;
+        }
+
+        /* Pull quote / emphasis */
+        .pull-quote {
+            font-size: 24px;
+            font-style: italic;
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px;
+            color: #444;
+            column-span: all;
+        }
+
+        /* Blockquote styling for markdown */
+        blockquote {
+            font-size: 24px;
+            font-style: italic;
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px;
+            color: #444;
+            border: none;
+            column-span: all;
+        }
+
+        blockquote p {
+            margin: 0;
+        }
+
+        /* Footer */
+        footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            border-top: 1px solid #e0e0e0;
+            margin-top: auto;
+            font-family: 'Arial', sans-serif;
+            font-size: 12px;
+            color: #999;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .article-body {
+                column-count: 1;
+            }
+
+            .content-wrapper {
+                padding: 40px 20px;
+            }
+
+            .article-title {
+                font-size: 24px;
+            }
+
+            header {
+                padding: 40px 20px 30px;
+            }
+
+            nav {
+                padding: 20px 20px;
+                flex-wrap: wrap;
+            }
+
+            nav a {
+                margin-right: 20px;
+                margin-bottom: 10px;
+            }
+
+            .logo {
+                width: 300px;
+            }
+
+            .language-toggle {
+                position: static;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+
+            .article-header {
+                padding-bottom: 20px;
+            }
+
+            .static-section {
+                padding: 0 20px 60px;
+            }
+        }
+
+        /* Scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Selection styling */
+        ::selection {
+            background-color: #f0f0f0;
+            color: #1a1a1a;
+        }
+
+        /* Section dividers */
+        .section-divider {
+            border-top: 1px solid #e0e0e0;
+            margin: 100px 0 80px;
+        }
+
+        /* Static sections (Submit, About) */
+        .static-section {
+            display: flex;
+            flex-direction: column;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 40px 100px;
+        }
+
+        .static-section h1 {
+            font-size: 48px;
+            font-weight: 400;
+            margin-bottom: 30px;
+            letter-spacing: 0.5px;
+        }
+
+        .static-section h2 {
+            font-size: 28px;
+            font-weight: 400;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .static-section h3 {
+            font-size: 22px;
+            font-weight: 400;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .static-section p {
+            margin-bottom: 1.5em;
+        }
+
+        /* First paragraph in static sections (intro text) */
+        .static-section p:first-of-type em {
+            font-size: 22px;
+            color: #444;
+            font-style: italic;
+            display: block;
+            margin-bottom: 40px;
+        }
+
+        .static-section ul {
+            margin-left: 30px;
+            margin-bottom: 1.5em;
+        }
+
+        .static-section li {
+            margin-bottom: 0.8em;
+        }
+
+        .intro-text {
+            font-size: 22px;
+            color: #444;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        /* Blockquotes in static sections (pull quotes) */
+        .static-section blockquote {
+            font-size: 28px;
+            font-style: italic;
+            text-align: center;
+            margin: 60px 0;
+            padding: 30px 0;
+            color: #444;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+            border-left: none;
+        }
+
+        .static-section blockquote p {
+            margin: 0;
+        }
+
+        .static-section blockquote em {
+            font-style: italic;
+            font-size: inherit;
+            color: inherit;
+            display: inline;
+            margin: 0;
+        }
+
+        /* Horizontal rules in static sections */
+        .static-section hr {
+            border: none;
+            border-top: 1px solid #e0e0e0;
+            margin: 50px 0;
+        }
+
+        /* Links in static sections */
+        .static-section a {
+            color: #1a1a1a;
+            text-decoration: none;
+            border-bottom: 1px solid #1a1a1a;
+            transition: all 0.3s ease;
+        }
+
+        .static-section a:hover {
+            opacity: 0.6;
+        }
+
+        /* Code blocks in static sections */
+        .static-section code {
+            background-color: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+        }
+
+        .static-section pre {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .static-section pre code {
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+        }
+
+        .highlight-box {
+            background-color: #f9f9f9;
+            border-left: 3px solid #1a1a1a;
+            padding: 30px;
+            margin: 40px 0;
+        }
+
+        .highlight-box p {
+            margin-bottom: 10px;
+        }
+
+        .highlight-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .email-link {
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+            color: #1a1a1a;
+            text-decoration: none;
+            border-bottom: 1px solid #1a1a1a;
+            transition: all 0.3s ease;
+        }
+
+        .email-link:hover {
+            opacity: 0.6;
+        }
+
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+        }
+
+        pre {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .static-pull-quote {
+            font-size: 28px;
+            font-style: italic;
+            text-align: center;
+            margin: 60px 0;
+            padding: 30px 0;
+            color: #444;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        @media (max-width: 768px) {
+            .static-section {
+                padding: 0 20px 60px;
+            }
+
+            .static-section h1 {
+                font-size: 32px;
+            }
+
+            .intro-text {
+                font-size: 18px;
+            }
+
+            .static-pull-quote {
+                font-size: 22px;
+            }
+
+            .static-section blockquote {
+                font-size: 22px;
+            }
+        }
+    </style>
+    <!-- Marked.js for markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- js-yaml for frontmatter parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+    <script>
+        // Language toggle functionality
+        function toggleLanguage(articleId, lang) {
+            const article = document.getElementById(articleId);
+            
+            // Hide all language versions in this article
+            article.querySelectorAll('.lang-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Show selected language
+            article.querySelector(`.lang-content[data-lang="${lang}"]`).classList.add('active');
+            
+            // Update button states
+            article.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            article.querySelector(`.lang-btn[data-lang="${lang}"]`).classList.add('active');
+        }
+
+        // Parse frontmatter from markdown
+        function parseFrontmatter(text) {
+            const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
+            const match = text.match(frontmatterRegex);
+            
+            if (match) {
+                try {
+                    const frontmatter = jsyaml.load(match[1]);
+                    const content = match[2];
+                    return { frontmatter, content };
+                } catch (e) {
+                    console.error('Error parsing frontmatter:', e);
+                    return { frontmatter: {}, content: text };
+                }
+            }
+            
+            return { frontmatter: {}, content: text };
+        }
+
+        // Render markdown content with frontmatter
+        function renderMarkdown() {
+            // Render article markdown (with frontmatter)
+            document.querySelectorAll('.markdown-source:not(.static-content)').forEach(source => {
+                const rawText = source.textContent.trim();
+                const { frontmatter, content } = parseFrontmatter(rawText);
+                const targetElement = document.getElementById(source.dataset.target);
+                
+                if (targetElement) {
+                    // Render the markdown content
+                    targetElement.innerHTML = marked.parse(content);
+                }
+                
+                // If this is the first language version and we have frontmatter, update the header
+                if (source.dataset.updateHeader === 'true' && Object.keys(frontmatter).length > 0) {
+                    const article = targetElement.closest('article');
+                    
+                    if (frontmatter.title) {
+                        const titleElement = article.querySelector('.article-title');
+                        if (titleElement) titleElement.textContent = frontmatter.title;
+                    }
+                    
+                    if (frontmatter.author || frontmatter.type) {
+                        const metaElement = article.querySelector('.article-meta');
+                        if (metaElement) {
+                            let metaHtml = '';
+                            if (frontmatter.author) {
+                                metaHtml += `<span class="article-author">${frontmatter.author}</span>`;
+                            }
+                            if (frontmatter.author && frontmatter.type) {
+                                metaHtml += ' · ';
+                            }
+                            if (frontmatter.type) {
+                                metaHtml += frontmatter.type;
+                            }
+                            metaElement.innerHTML = metaHtml;
+                        }
+                    }
+                }
+            });
+            
+            // Render static content markdown (no frontmatter)
+            document.querySelectorAll('.markdown-source.static-content').forEach(source => {
+                const markdownText = source.textContent.trim();
+                const targetElement = document.getElementById(source.dataset.target);
+                
+                if (targetElement) {
+                    targetElement.innerHTML = marked.parse(markdownText);
+                }
+            });
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Render all markdown content
+            renderMarkdown();
+            
+            // Set default language to English for all articles
+            document.querySelectorAll('article').forEach(article => {
+                const defaultBtn = article.querySelector('.lang-btn[data-lang="en"]');
+                if (defaultBtn) {
+                    defaultBtn.classList.add('active');
+                }
+                const defaultContent = article.querySelector('.lang-content[data-lang="en"]');
+                if (defaultContent) {
+                    defaultContent.classList.add('active');
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <svg class="logo" width="673" xmlns="http://www.w3.org/2000/svg" height="325" viewBox="0 0 673 325" fill="none" version="1.1">
+            <g>
+                <path d="M211.3284912109375,5.958404541015625C190.1956787109375,84.50006103515625,156.0579833984375,163.5833740234375,144.13690185546875,250.25006103515625C141.96942138671875,263.791748046875,145.76251220703125,277.3333740234375,159.30926513671875,279.50006103515625C176.64898681640625,288.166748046875,188.02825927734375,262.70831298828125,193.98870849609375,269.75006103515625C188.570068359375,282.20843505859375,173.3978271484375,288.166748046875,160.934814453125,286.54168701171875C143.59503173828125,284.916748046875,134.38330078125,268.125,137.0926513671875,250.25006103515625C150.09747314453125,173.87506103515625,177.19085693359375,101.8333740234375,196.15618896484375,31.416717529296875C156.0579833984375,108.87506103515625,124.62969970703125,192.29165649414062,72.0684814453125,262.16668701171875C63.39862060546875,269.2083740234375,55.27056884765625,258.37506103515625,58.521728515625,249.70843505859375C66.6497802734375,183.62503051757812,78.57086181640625,144.08340454101562,79.11273193359375,84.50006103515625C53.10308837890625,159.25003051757812,39.556396484375,239.9583740234375,13.54669189453125,308.75C38.47265625,230.20834350585938,49.8519287109375,144.62506103515625,81.28021240234375,67.16668701171875C96.994384765625,65.541748046875,81.82208251953125,93.16671752929688,91.57574462890625,81.791748046875C82.364013671875,135.41665649414062,68.8172607421875,200.41665649414062,69.9010009765625,259.4583740234375C129.5064697265625,182.54171752929688,156.599853515625,89.375,204.8260498046875,7.583343505859375M422.1151123046875,189.58334350585938C436.2037353515625,203.666748046875,412.361572265625,218.29171752929688,404.2335205078125,230.75006103515625C412.361572265625,239.9583740234375,419.9476318359375,249.16668701171875,422.656982421875,261.62506103515625C422.1151123046875,271.37506103515625,420.489501953125,281.125,411.8197021484375,288.166748046875C397.189208984375,293.041748046875,383.1007080078125,279.50006103515625,374.4307861328125,267.04168701171875C387.435546875,257.29168701171875,390.1448974609375,298.45843505859375,412.361572265625,277.87506103515625C422.1151123046875,263.791748046875,412.361572265625,244.8333740234375,397.731201171875,236.166748046875C382.558837890625,248.625,366.8446044921875,259.4583740234375,345.71173095703125,262.70831298828125C334.33251953125,262.70831298828125,325.12078857421875,255.666748046875,323.4951171875,245.37506103515625C313.19964599609375,252.9583740234375,308.3228759765625,270.29168701171875,294.23431396484375,275.16668701171875C285.56439208984375,267.04168701171875,293.1505126953125,255.12506103515625,293.1505126953125,247.541748046875C278.5201416015625,262.70831298828125,276.89447021484375,286.54168701171875,257.38726806640625,297.91668701171875C241.673095703125,287.08331298828125,251.968505859375,263.791748046875,247.6336669921875,248.0833740234375C240.04742431640625,256.75,234.6287841796875,267.04168701171875,224.33331298828125,273.54168701171875C217.83087158203125,278.95831298828125,212.9541015625,273.54168701171875,207.53533935546875,269.2083740234375C212.9541015625,250.79168701171875,227.58453369140625,236.7083740234375,242.7568359375,223.16671752929688C249.8011474609375,218.83334350585938,256.84539794921875,215.5833740234375,273.1014404296875,221.00003051757812C259.0128173828125,222.62506103515625,224.87518310546875,232.37503051757812,214.03778076171875,268.666748046875C231.37762451171875,267.04168701171875,239.505615234375,246.45831298828125,251.968505859375,236.7083740234375C262.26409912109375,250.25006103515625,248.17547607421875,277.87506103515625,262.26409912109375,288.7083740234375C276.89447021484375,271.37506103515625,282.3131103515625,246.45831298828125,300.73663330078125,229.66668701171875C309.40655517578125,236.7083740234375,295.3179931640625,252.9583740234375,299.111083984375,263.25006103515625C308.86474609375,256.2083740234375,314.8251953125,242.66671752929688,328.3719482421875,234.00006103515625C333.24871826171875,243.75,334.33251953125,263.791748046875,355.46539306640625,254.04168701171875C372.2633056640625,251.875,384.1844482421875,241.58340454101562,395.021728515625,231.8333740234375C385.2681884765625,218.83334350585938,366.302734375,213.41668701171875,360.88409423828125,199.3333740234375C378.7657470703125,192.29165649414062,399.898681640625,189.58334350585938,422.1151123046875,190.66671752929688ZM568.96142578125,182.54171752929688C589.5523681640625,187.416748046875,577.63134765625,208.54165649414062,578.1732177734375,220.4583740234375C586.843017578125,232.91665649414062,673.5418701171875,252.9583740234375,623.6900634765625,283.8333740234375C606.89208984375,290.87506103515625,590.0941162109375,283.29168701171875,571.6707763671875,289.79168701171875C584.1336669921875,273,619.89697265625,289.79168701171875,635.611083984375,265.41668701171875C619.3551025390625,244.8333740234375,592.8035888671875,238.33334350585938,568.96142578125,222.62506103515625C555.4146728515625,242.66671752929688,533.7398681640625,253.50006103515625,515.8583984375,259.4583740234375C511.5234375,258.91668701171875,490.932373046875,264.875,479.01123046875,254.04168701171875C474.6763916015625,263.25006103515625,468.1739501953125,270.83331298828125,458.962158203125,277.3333740234375C447.5830078125,281.66668701171875,440.5386962890625,269.2083740234375,442.7061767578125,257.83343505859375C444.331787109375,247.00006103515625,445.9573974609375,235.625,453.54345703125,225.87506103515625C454.627197265625,237.25003051757812,442.7061767578125,259.4583740234375,454.627197265625,272.4583740234375C475.21826171875,262.70831298828125,478.469482421875,242.12506103515625,486.5975341796875,224.25003051757812C499.0604248046875,232.37503051757812,476.84375,244.291748046875,490.3905029296875,252.9583740234375C505.562744140625,258.91668701171875,524.5281982421875,251.3333740234375,539.7005615234375,244.8333740234375C546.7447509765625,239.41671752929688,557.58203125,231.8333740234375,564.0845947265625,219.916748046875C553.247314453125,211.791748046875,540.7843017578125,207.4583740234375,536.4493408203125,193.91671752929688C540.7843017578125,185.25006103515625,549.4542236328125,183.62503051757812,556.4984130859375,182.54171752929688C559.7496337890625,182.54171752929688,565.1683349609375,182.54171752929688,568.96142578125,182.54171752929688ZM409.1103515625,195C396.10546875,195.541748046875,384.726318359375,195,371.721435546875,203.125C381.47509765625,210.70834350585938,390.1448974609375,217.75006103515625,402.0660400390625,225.33340454101562C408.5684814453125,218.29171752929688,437.2874755859375,193.91671752929688,408.5684814453125,192.83340454101562ZM566.7938232421875,184.70840454101562C529.4049072265625,184.70840454101562,548.912353515625,213.41668701171875,572.212646484375,209.62506103515625C574.3800048828125,202.04171752929688,578.1732177734375,192.83340454101562,571.6707763671875,185.25006103515625C568.96142578125,186.33334350585938,567.3358154296875,182.00006103515625,564.62646484375,183.62503051757812Z" 
+                fill="#000000" 
+                stroke="#000000" 
+                stroke-width="2.5" 
+                stroke-linejoin="round"
+                fill-rule="evenodd"/>
+            </g>
+        </svg>
+        <p class="edition-info">Primera Edición en - First Edition in - Diciembre 2025</p>
+        <!-- <p class="tagline">Un lugar sin paredes</p> -->
+    </header>
+
+    <nav>
+        <a href="#inicio">Inicio - Home</a>
+        <a href="#enviar">Enviar - Submit</a>
+        <a href="#sobre">Sobre - About</a>
+        <a href="https://patreon.com/mansus" target="_blank">Apoyar - Be a Patreon</a>
+    </nav>
+
+    <div class="content-wrapper" id="inicio">
+        <!-- 
+        HOW TO ADD NEW ARTICLES WITH FRONTMATTER:
+        
+        1. Copy the article structure below
+        2. Update the article id (article-4, article-5, etc.)
+        3. Add frontmatter in YAML format at the top of your markdown:
+           ---
+           title: Your Title
+           author: Author Name
+           type: Prosa / Poesía / Cuento
+           lang: en / es
+           ---
+        
+        4. Write content in markdown after the frontmatter
+        5. Update data-target attributes to match the article id
+        6. Set data-update-header="true" on the first language version
+        
+        The frontmatter will automatically populate the article title, author, and type!
+        
+        Markdown tips:
+        - Blank lines create new paragraphs
+        - Use > for pull quotes
+        - Two spaces at end of line for line breaks (useful for poetry)
+        - *italic* or **bold** for emphasis
+        -->
+        
+        <!-- Article 1 -->
+        <article id="article-1">
+            <div class="article-header">
+                <div class="language-toggle">
+                    <button class="lang-btn" data-lang="en" onclick="toggleLanguage('article-1', 'en')">En</button>
+                    <span class="lang-separator">/</span>
+                    <button class="lang-btn" data-lang="es" onclick="toggleLanguage('article-1', 'es')">Es</button>
+                </div>
+                <h2 class="article-title">Title Placeholder</h2>
+                <p class="article-meta">
+                    <span class="article-author">Author</span> · Type
+                </p>
+            </div>
+            
+            <!-- Content will be rendered here from markdown at bottom of file -->
+            <div class="article-body lang-content" data-lang="en" id="article-1-en"></div>
+            <div class="article-body lang-content" data-lang="es" id="article-1-es"></div>
+        </article>
+    </div>
+
+    <!-- Submission Guide Section -->
+    <div class="section-divider" id="enviar"></div>
+    <div class="static-section">
+        <!-- Content will be rendered here from markdown at bottom of file -->
+        <div id="enviar-content"></div>
+    </div>
+
+    <!-- About Section -->
+    <div class="section-divider" id="sobre"></div>
+    <div class="static-section">
+        <!-- Content will be rendered here from markdown at bottom of file -->
+        <div id="sobre-content"></div>
+    </div>
+
+    <!-- Support CTA -->
+    <div style="background-color: #1a1a1a; color: #FEFEFE; padding: 80px 40px; text-align: center; margin-top: 100px;">
+        <div style="max-width: 700px; margin: 0 auto;">
+            <h2 style="font-size: 32px; font-weight: 400; margin-bottom: 20px; color: #FEFEFE;">Apoya Mansus</h2>
+            <p style="font-size: 20px; margin-bottom: 30px; line-height: 1.6;">Esta revista existe gracias a lectores como tú. Si crees en la literatura sin fronteras, en las voces sin restricciones, en un lugar sin paredes—ayúdanos a continuar.</p>
+            <a href="https://patreon.com/mansus" target="_blank" style="display: inline-block; background-color: #FEFEFE; color: #1a1a1a; padding: 15px 40px; text-decoration: none; font-family: 'Arial', sans-serif; font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase; transition: all 0.3s ease; border: 2px solid #FEFEFE;">Apoyar en Patreon</a>
+        </div>
+    </div>
+
+    <footer>
+        <p><strong>Mansus</strong> — Un lugar sin paredes</p>
+        <p>Una revista literaria digital · Publicación mensual</p>
+        <p style="margin-top: 20px; font-size: 11px;">© 2025 Mansus. Todos los derechos reservados a sus autores.</p>
+    </footer>
+
+    <!-- ============================================ -->
+    <!-- CONTENT SECTION - ALL MARKDOWN BELOW        -->
+    <!-- ============================================ -->
+    <!-- 
+        This section contains all the content for the journal.
+        Edit the markdown here to update articles and static pages.
+        The HTML structure above will automatically render this content.
+    -->
+
+    <!-- ============================================ -->
+    <!-- ARTICLE 1 - ENGLISH                         -->
+    <!-- ============================================ -->
+    <script type="text/markdown" class="markdown-source" data-target="article-1-en" data-update-header="true">
+---
+title: Coming Soon
+author: Illopoly
+type: Announcement
+lang: en
+---
+
+Writing is the language of the gods; depending on who you ask, they would even say that the gods are made from language itself. I will leave these metaphysical implications for later, perhaps when we publish the first edition of the journal this coming December 2025.
+
+December is a month of silences and deaths, so it is curious that Mansus comes to light and takes its first breaths of frozen air now—we believe, or deep down we hope, that this is a sign.
+
+Without further delay, I will describe the work and purpose of this journal:
+
+> Our desire is to give voice and space to emerging writers who don't have it yet. The initiated know that the Mansus has no walls; we let everyone in.
+
+As one of the editors and curators of this little house without walls, I will do my best to maintain an acceptable level of quality for our readers—but I don't make empty promises: sometimes the absolute abandonment to new forms/shapes/vanguards will take precedence over a good but boring text. My hand is tied and my eyes only look up; to the glory.
+
+*— Illopoly, November 2025*
+   </script>
+
+    <!-- ============================================ -->
+    <!-- ARTICLE 1 - SPANISH                         -->
+    <!-- ============================================ -->
+<script type="text/markdown" class="markdown-source" data-target="article-1-es">
+---
+title: Próximamente
+author: Illopoly
+type: Announcement
+lang: es
+---
+
+La escritura es el lenguaje de los dioses; dependiendo de a quién le preguntes, te dirán tal vez que es al revés, que los dioses están hechos de lenguaje. Dejaré para otro momento la discusión filosófica y otras metafísicas para anunciar la apertura de Mansus y su próxima revista—a ser publicada el próximo mes en diciembre de 2025.
+
+Diciembre es un mes de silencios y muertes, por lo tanto es curioso que Mansus salga a la luz y dé sus primeras caladas de aire gélido ahora; creemos—o en el fondo esperamos—que sea una señal.
+
+Sin más dilaciones me dispongo a narrar la obra y tarea de esta revista:
+
+> Nuestro deseo es el de dar voz y espacio a todos aquellos escritores emergentes que no lo tienen. Los iniciados saben que la casa Mansus no tiene paredes; entra quien quiera.
+
+Como uno de los editores y curadores de esta pequeña casa sin paredes daré lo mejor de mí en garantizar un mínimo de calidad a nuestros lectores—pero no me propongo a hacer promesas vacías: a veces el abandono absoluto a la tempestad de la vanguardia/nuevas formas/mutilaciones va a tener preferencia sobre un trabajo adecuado pero altamente aburrido. Mi mano está atada y mis ojos solo miran hacia arriba; a la gloria.
+
+*— Illopoly, noviembre de 2025*
+</script>
+
+  
+    <!-- ============================================ -->
+    <!-- SUBMISSION GUIDE                            -->
+    <!-- ============================================ -->
+    <script type="text/markdown" class="markdown-source static-content" data-target="enviar-content">
+# Envía tu trabajo
+
+## Qué publicamos
+
+- **Prosa** — Ensayos, narrativas breves, escritura experimental, Analisis Politico.
+- **Poesía** — Todas las formas y estilos
+- **Relato Corto** — Ficción de cualquier género
+
+## Idiomas
+
+Puedes enviar en cualquier idioma. Hablamos mas o menos fluentemente espanol, portugues e ingles. Si tienes traducciones disponibles, publicaremos ambas versiones. 
+
+## Cómo enviar
+
+### 3. Envía tu manuscrito 
+
+**Email:** [submit@mansus.journal](mailto:submit@mansus.journal)
+
+**Asunto:** Envío - [Tu Título]
+
+Incluye una breve biografía (2-3 oraciones) en el cuerpo del email.
+
+## Qué esperar
+
+- Si es aceptado te responderemos con un mensaje y tu trabajo aparecerá en la próxima edición mensual
+- Conservas todos los derechos de tu trabajo
+- Te enviaremos un enlace cuando tu pieza sea publicada
+
+## Directrices
+
+### Extensión
+
+Por nuestro formato normalmente preferimos textos algo mas cortos pero aqui estan los maximos:
+
+- Poesía: Sin límite
+- Prosa/Ensayos: Hasta 3,000 palabras
+- Cuentos: Hasta 5,000 palabras
+
+### Publicación previa
+
+Aceptamos trabajos previamente publicados si conservas los derechos. Por favor indícalo en tu email de envío.
+
+### Envíos simultáneos
+
+Permitidos. Por favor notifícanos si tu trabajo es aceptado en otro lugar.
+
+### Contenido
+
+Estamos abiertos a todos los temas y estilos. 
+
+    </script>
+
+    <!-- ============================================ -->
+    <!-- ABOUT SECTION                               -->
+    <!-- ============================================ -->
+    <script type="text/markdown" class="markdown-source static-content" data-target="sobre-content">
+# Sobre Mansus
+
+> The Wood grows around the walls of the Mansus. As any student of Histories knows, the Mansus has no walls. - Christopher Illopoly, Traveling at night, Cultist Simulator 
+
+El nombre viene de Cultist Simulator: el Mansus, la Casa del Sol, una arquitectura metafísica de sueños donde moran las Horas. Un lugar que existe más allá de los límites físicos. Una casa sin paredes.
+
+## Nuestra filosofía
+
+Publicamos textos que dificilmente tendrian un espacio en un momento donde la literatura comercial es mas comercial que nunca.
+
+## Quiénes somos
+
+Somos lectores que se cansaron de esperar y escritores que necesitaban un espacio. 
+
+Publicamos mensualmente. Cada edición es una colección cuidadosamente curada de voces que merecen ser escuchadas.
+
+## Contacto
+
+**Para envíos:** [submit@mansus.journal](mailto:submit@mansus.journal)
+
+**Para todo lo demás:** [hello@mansus.journal](mailto:hello@mansus.journal)
+
+</script>
+
+</body>
+</html>
